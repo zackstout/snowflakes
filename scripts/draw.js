@@ -1,45 +1,65 @@
 
-var angle2 = 0;
+var angle2 = 10.1;
+var colorPairs = [[], ['steelblue', 'orange'], ['tomato', 'grey'], ['green', 'purple']];
 
 function setup() {
   createCanvas(500, 500);
   background(200);
-  drawHex();
+  drawHex(250, 250, 120, 90, 3);
+
+  // drawMoreHex(250, 250, 70);
 }
 
 function draw() {
   background(200);
   angle2 += 0.03;
-  drawHex();
+  drawHex(250, 250, 100, 70, 3);
+}
+
+function drawMoreHex(cx, cy, s) {
+  for (var i=0; i < 6; i++) {
+
+  }
 }
 
 
-function drawHex() {
-  var rot = Math.random() * PI/2;
+function drawHex(cx, cy, r, s, iters) {
+  // var rot = Math.random() * PI/2;
+
+  if (iters < 1) {
+    return;
+  }
 
   for (var i=0; i < 6; i++) {
     push();
-    translate(250, 250);
+    translate(cx, cy);
     var angle = 2*PI*i / 6;
     // rotate(angle);
-    var x = 100 * cos(angle);
-    var y = 100 * sin(angle);
+    var x = r * cos(angle);
+    var y = r * sin(angle);
 
     push();
     translate(x, y);
 
-    ellipse(0, 0, 10);
+    // ellipse(0, 0, 10);
+
+
+    drawHex(0, 0, 20, r/3, iters - 1); // If you do this, you need a stopping condition.
 
     rotate(angle);
 
     push();
     rotate(angle2);
-    line(0, 0, 70, 70);
+    stroke(colorPairs[iters][0]);
+    strokeWeight(2);
+    line(0, 0, s, s);
     pop();
 
     push();
     rotate(-angle2);
-    line(0, 0, 70, 70);
+    stroke(colorPairs[iters][1]);
+    strokeWeight(2);
+    line(0, 0, s, s);
     pop();
 
     pop();
